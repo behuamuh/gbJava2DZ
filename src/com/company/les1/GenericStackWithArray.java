@@ -1,38 +1,36 @@
 package com.company.les1;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class GenericStack<E> implements Stack<E> {
+public class GenericStackWithArray<E> implements Stack<E> {
     private int size;
     private int maxSize;
-    private ArrayList<E> array;
+    private Object[] array;
 
-    public GenericStack(int maxSize) {
+    public GenericStackWithArray(int maxSize) {
         if (maxSize < 0) throw new IllegalArgumentException();
         this.maxSize = maxSize;
-        array = new ArrayList<>();
         size = 0;
+        array = new Object[maxSize];
     }
 
     @Override
     public void push(E element) throws StackException {
         if (isFull())
             throw new StackException();
-        array.add(size++, element);
-
+        array[size++] = element;
     }
 
     @Override
     public E pop() throws StackException {
         if (isEmpty())
             throw new StackException();
-        return array.get(--size);
+        return (E)array[--size];
     }
 
     @Override
     public E peek() {
-        return size == 0 ? null : array.get(size - 1);
+        return isEmpty() ? null : (E) array[size - 1];
     }
 
     @Override
